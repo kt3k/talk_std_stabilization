@@ -1,0 +1,56 @@
+dest: docs
+port: 30000
+title: deno std
+description: std
+ogImage: "https://kt3k.github.io/talk_deno_deploy_2023/assets/og-image.png"
+ogImageWidth: 959
+ogImageHeight: 626
+twitter: kt3k
+favicon: ./assets/logo.svg
+remarkConfig:
+  slideNumberFormat: 'Deno Std updates - %current% / %total%'
+css: |
+  body {
+    font-family: 'Avenir Next', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', sans-serif;
+    font-weight: bold;
+  }
+  h1, h2, h3 {
+    font-weight: bold;
+  }
+  .remark-code,
+  .remark-inline-code {
+    font-family: 'Menlo', 'Monaco', 'Courier new', monospace;
+  }
+
+  code.remark-code {
+    display: block;
+    padding: 0.7em;
+    border-radius: 5px;
+    background-color: #272822;
+    color: #f3f3f3;
+    font-size: 23px;
+  }
+
+  .remark-slide-content {
+    color: #24292e;
+    font-size: 32px;
+    padding: 15px 60px;
+  }
+
+  .remark-slide-content.inverse {
+    color: #f3f3f3;
+    background-color: #272822;
+  }
+
+  .remark-slide-number a {
+    color: #24292e;
+    text-decoration: none;
+  }
+
+  .inverse .remark-slide-number a {
+    color: #f3f3f3;
+  }
+
+  .text-center {
+    text-align: center;
+  }

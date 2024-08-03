@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>deno std</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+    <meta property="og:title" content="deno std"/>
+    
+    <meta property="og:image" content="https://kt3k.github.io/talk_deno_deploy_2023/assets/og-image.png"/>
+    
+    <meta property="og:image:width" content="959"/>
+    
+    
+    <meta property="og:image:height" content="626"/>
+    
+    
+    
+    <meta property="og:description" content="std" />
+    
+    
+    <meta name="twitter:creator" content="@kt3k"/>
+    
+    
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:image" content="https://kt3k.github.io/talk_deno_deploy_2023/assets/og-image.png" />
+    
+    
+    <link rel="icon" href="./assets/logo.svg" type="image/svg+xml" />
+    
+    
+    <style type="text/css">
+      body {
+  font-family: 'Avenir Next', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', sans-serif;
+  font-weight: bold;
+}
+h1, h2, h3 {
+  font-weight: bold;
+}
+.remark-code,
+.remark-inline-code {
+  font-family: 'Menlo', 'Monaco', 'Courier new', monospace;
+}
+
+code.remark-code {
+  display: block;
+  padding: 0.7em;
+  border-radius: 5px;
+  background-color: #272822;
+  color: #f3f3f3;
+  font-size: 23px;
+}
+
+.remark-slide-content {
+  color: #24292e;
+  font-size: 32px;
+  padding: 15px 60px;
+}
+
+.remark-slide-content.inverse {
+  color: #f3f3f3;
+  background-color: #272822;
+}
+
+.remark-slide-number a {
+  color: #24292e;
+  text-decoration: none;
+}
+
+.inverse .remark-slide-number a {
+  color: #f3f3f3;
+}
+
+.text-center {
+  text-align: center;
+}
+
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
+    </style>
+  </head>
+  <body>
+    <textarea id="source" style="display: none">class: middle, center
+
+# Summary <br/> of Standard Library stabilization
+
+---
+
+class: middle, center
+
+Yoshiya Hinosawa @kt3k
+
+Call me Yoshi
+
+<img src="./assets/hinosawa.jpg" width="180" />
+
+---
+
+Deno Standard Library is collection of 38 packages.
+
+- std/http
+- std/testing
+- std/fmt
+
+---
+
+We stabilized 
+
+---
+
+Deno Standard Library
+
+- When was it started?
+- Why does it exist?
+
+---
+
+Deno Standard Library
+
+- It didn't exist at the beginnig of Deno
+- It first appeared in the source code in [Dec 2018](https://github.com/denoland/deno_std/commit/99e276eb89fbe0003bfa8d9e7b907ff3ef19ee47) (a half year later the beginning of Deno)
+- It was first publicly explained in JS Fest in April, 2019 [Video](https://www.youtube.com/watch?v=z6JRlx5NC9E&t=2482s)
+
+---
+
+Dependency Hell
+
+- Node.js didn't have standard library, and had small core APIs.
+- People started publishing lot of one-liner-ish modules to npm.
+- That caused 'dependency hell'
+
+Deno Std was intended as the solution to this issue.
+
+---
+
+Now Deno Std seems very successful!
+
+- Most Deno programs use standard library
+- Not many competitions against the standard library
+- It seems well accepted, well understood by the community
+- Node.js now introduced to its core some of what deno_std does.
+  - e.g. flags, bdd testing, dotenv, etc
+
+---
+
+class: middle center inverse
+
+Updates from 2023 - 2024
+
+---
+
+# std/expect
+
+```
+expect(foo).toEqual(42);
+expect(bar).toEqual({ x: 1 });
+...
+```
+
+- Mostly Jest compatible
+- Not 100% compatible yet
+- Many contributions have been coming form the community
+
+---
+
+# std/ulid
+
+- UUID alternative
+- 6-byte timestamp part + 10-byte random part
+- Useful for KV keys
+
+---
+
+# std/cli
+
+- std/flags are moved to here
+- There's also other utils such as `Spinner`, `promptSecret`
+
+---
+
+# std/url
+
+- url version of `std/path`
+
+```ts
+dirname(new URL("https://example.com/foo/bar"))
+// => new URL("https://example.com/foo")
+dirname(import.meta.url);
+// returns parent dir of this file
+```
+
+---
+
+# Other new modules
+
+- `std/ini` handles INI files
+- `std/webgpu`, essentials for WebGPU programming
+- `std/text` has utils about levenshtein distance
+- `std/net` currently only has `getAvailablePort` util
+
+---
+
+class: middle center inverse
+
+Updates towards the Stabilization
+
+---
+
+# Standard library will be split into small independent modules
+
+```
+https://deno.land/std@0.220.0/path/mod.ts
+
+↓↓↓
+
+jsr:@std/path@0.220.0
+```
+
+
+---
+
+
+# Stabilities of modules are defined
+
+- 19 modules are stable
+- 22 modules are unstable
+
+stable modules will become v1.0.0 when we migrate to JSR
+
+---
+
+# Started publishing to JSR
+
+- Standard modules are now available from both JSR and deno.land/std
+
+```js
+import { assert }
+  from "https://deno.land/std@0.220.0/assert/mod.ts";
+
+import { assert } from "jsr:@std/assert@0.220.0";
+```
+
+Currently these 2 have the same versions, but that might change in the future.
+
+
+---
+
+class: middle center inverse
+
+Some future plans and topics
+
+<!---
+
+`std/dotenv` vs `--env`
+
+- They have significant overlap,
+- but also have some difference
+
+Should we remove `std/dotenv` or keep both?
+
+--->
+---
+
+# Node.js compat of @std/fs
+
+- ~70% of @std modules are compatibile with All runtimes.
+- Maybe it's good to expand it
+- `@std/fs` is a good first candidate
+
+---
+
+# Node.js compat of @std/fs
+
+- `@std/fs` only has few APIs such `ensureFile`, `walk`, `move`, etc
+- Basic FS APIs are in Deno namespace
+- What APIs to include in @std/fs is not obvious
+- How to implement is also not obvious
+- Currently community seems confused by this direction.
+
+---
+
+# When to migrate to JSR?
+
+- Currently we use conversion script
+- That prevents us to do independent versioning of each module
+- That prevents us to publish v1 of each module
+- When to migrate? in a month? in 3 months? in 6 months?
+
+---
+
+# Versioning of /std after JSR migration
+
+- Do we keep publishing the same thing to `/std`?
+- How to version `/std` in that case?
+- Maybe we don't publish to `/std` anymore except security fixes?
+
+---
+class: middle center
+
+Thanks
+</textarea>
+    <div style="z-index: -1; position: fixed; display: flex; align-items: center; gap: 4px;">
+      <svg style="animation: spin 1s linear infinite; width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-refresh" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4" />
+        <path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4" />
+      </svg>
+      <span>loading...</span>
+    </div>
+    <script src="remark.js"></script>
+    
+    <script>
+      window.slideshow = remark.create({"slideNumberFormat":"Deno Std updates - %current% / %total%"})
+    </script>
+    
+    <script>
+      
+      ;window.LiveReloadOptions = {
+        host: 'localhost',
+        port: '35729'
+      };
+    </script>
+  </body>
+</html>
