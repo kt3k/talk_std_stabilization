@@ -149,6 +149,8 @@ class: middle, center
 - 7/10 The last RC - std/fmt@1.0.0-rc.1
 - 8/5 The last 1.0.0 - std/csv1.0.0
 
+---
+
 # Stabilization Result
 
 - 30 packages stabilized 🎉
@@ -210,6 +212,8 @@ class: middle, center
 <td>csv&nbsp;&nbsp;&nbsp;</td>
 </tr>
 </table>
+
+---
 
 # Stable 30 package
 
