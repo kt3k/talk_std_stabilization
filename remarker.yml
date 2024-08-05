@@ -8,7 +8,7 @@ ogImageHeight: 626
 twitter: kt3k
 favicon: ./assets/logo.svg
 remarkConfig:
-  slideNumberFormat: 'Deno Std updates - %current% / %total%'
+  slideNumberFormat: 'STD stabilization - %current% / %total%'
 css: |
   body {
     font-family: 'Avenir Next', 'Hiragino Kaku Gothic ProN', 'Meiryo', 'メイリオ', sans-serif;

@@ -1,6 +1,8 @@
 class: middle, center
 
-# Summary <br/> of Standard Library stabilization
+# Story of<br />STD stabilization
+
+Yoshi @ Warsaw Offsite
 
 ---
 
@@ -14,205 +16,234 @@ Call me Yoshi
 
 ---
 
-Deno Standard Library is collection of 38 packages.
+# Summary
 
-- std/http
-- std/testing
-- std/fmt
+- We have stabilized 30 of the 38 packages in the Deno Standard Library over a period of about 3 month (May - Aug)
 
 ---
 
-We stabilized 
+# STD stabilization
+
+- The motivation
+- The methods
+- The outcome
 
 ---
 
-Deno Standard Library
+class: middle, center
 
-- When was it started?
-- Why does it exist?
-
----
-
-Deno Standard Library
-
-- It didn't exist at the beginnig of Deno
-- It first appeared in the source code in [Dec 2018](https://github.com/denoland/deno_std/commit/99e276eb89fbe0003bfa8d9e7b907ff3ef19ee47) (a half year later the beginning of Deno)
-- It was first publicly explained in JS Fest in April, 2019 [Video](https://www.youtube.com/watch?v=z6JRlx5NC9E&t=2482s)
+# The motivation
 
 ---
 
-Dependency Hell
+# The motivation
 
-- Node.js didn't have standard library, and had small core APIs.
-- People started publishing lot of one-liner-ish modules to npm.
-- That caused 'dependency hell'
-
-Deno Std was intended as the solution to this issue.
+- Deno Standard Library has a good reputation for its quality, broad scope, and maintainance
 
 ---
 
-Now Deno Std seems very successful!
+# A weakness of STD
 
-- Most Deno programs use standard library
-- Not many competitions against the standard library
-- It seems well accepted, well understood by the community
-- Node.js now introduced to its core some of what deno_std does.
-  - e.g. flags, bdd testing, dotenv, etc
+One weakness of the Deno Standard Library is that it is still in version 0.x.
 
 ---
 
-class: middle center inverse
+# 0.x STD
 
-Updates from 2023 - 2024
-
----
-
-# std/expect
-
-```
-expect(foo).toEqual(42);
-expect(bar).toEqual({ x: 1 });
-...
-```
-
-- Mostly Jest compatible
-- Not 100% compatible yet
-- Many contributions have been coming form the community
-
----
-
-# std/ulid
-
-- UUID alternative
-- 6-byte timestamp part + 10-byte random part
-- Useful for KV keys
-
----
-
-# std/cli
-
-- std/flags are moved to here
-- There's also other utils such as `Spinner`, `promptSecret`
-
----
-
-# std/url
-
-- url version of `std/path`
-
-```ts
-dirname(new URL("https://example.com/foo/bar"))
-// => new URL("https://example.com/foo")
-dirname(import.meta.url);
-// returns parent dir of this file
-```
-
----
-
-# Other new modules
-
-- `std/ini` handles INI files
-- `std/webgpu`, essentials for WebGPU programming
-- `std/text` has utils about levenshtein distance
-- `std/net` currently only has `getAvailablePort` util
-
----
-
-class: middle center inverse
-
-Updates towards the Stabilization
-
----
-
-# Standard library will be split into small independent modules
-
-```
-https://deno.land/std@0.220.0/path/mod.ts
-
-↓↓↓
-
-jsr:@std/path@0.220.0
-```
-
-
----
-
-
-# Stabilities of modules are defined
-
-- 19 modules are stable
-- 22 modules are unstable
-
-stable modules will become v1.0.0 when we migrate to JSR
-
----
-
-# Started publishing to JSR
-
-- Standard modules are now available from both JSR and deno.land/std
-
-```js
-import { assert }
-  from "https://deno.land/std@0.220.0/assert/mod.ts";
-
-import { assert } from "jsr:@std/assert@0.220.0";
-```
-
-Currently these 2 have the same versions, but that might change in the future.
-
-
----
-
-class: middle center inverse
-
-Some future plans and topics
+- Deno Community was relatively tolerant to version being 0.x
+- We gradually found out it's larger problem for entreprise users
+- We set the stabilization as a requirement for Deno 2.0
 
 <!---
 
-`std/dotenv` vs `--env`
+# Timeline
 
-- They have significant overlap,
-- but also have some difference
+- 2/6 Dual publish to deno.land/x/ and JSR started https://github.com/denoland/std/pull/4281
+- 4/17 RC plan announced https://github.com/denoland/std/pull/4600
+- 4/29 JSR migration https://github.com/denoland/std/pull/4650
+- 5/7 The first RC (std/bytes)
+- 6/6 The first stabilization (std/bytes)
+- 7/10 The last RC landed (std/fmt)
+- 8/5 The last stabilization (std/csv)
 
-Should we remove `std/dotenv` or keep both?
-
---->
----
-
-# Node.js compat of @std/fs
-
-- ~70% of @std modules are compatibile with All runtimes.
-- Maybe it's good to expand it
-- `@std/fs` is a good first candidate
+-->
 
 ---
+class: middle, center
 
-# Node.js compat of @std/fs
-
-- `@std/fs` only has few APIs such `ensureFile`, `walk`, `move`, etc
-- Basic FS APIs are in Deno namespace
-- What APIs to include in @std/fs is not obvious
-- How to implement is also not obvious
-- Currently community seems confused by this direction.
+# The methods (How)
 
 ---
 
-# When to migrate to JSR?
+# The blocker for stabilization
 
-- Currently we use conversion script
-- That prevents us to do independent versioning of each module
-- That prevents us to publish v1 of each module
-- When to migrate? in a month? in 3 months? in 6 months?
+- It has too broad scope
+- We can't stabilize it as a whole as we are too unsure about some parts
+- Some parts are used widely, battle-tested, very mature
+- Some parts are recently invented by some contributors, and not used enough widely
+
+---
+
+# The blocker for stabilization
+
+=> It's impossible to stabilize the entire Standard Library
 
 ---
 
-# Versioning of /std after JSR migration
+# Split STD
 
-- Do we keep publishing the same thing to `/std`?
-- How to version `/std` in that case?
-- Maybe we don't publish to `/std` anymore except security fixes?
+- We gave up to stablize the entire STD
+- We split STD into 38 packages
+- We can now stabilize packages one by one
+- We can even choose not to stabilize some
 
 ---
-class: middle center
 
-Thanks
+# Split STD
+
+- This idea was unpopular among some community members
+--
+
+  - No prior example
+  - Managing each version of every package is cumbersome
+
+--
+
+We might revisit the idea of single versioned STD in the future
+
+---
+
+# RC process
+
+We decided to publish RC a month prior to 1.0.0
+
+- This is to give the community an opportunity to check it.
+- Deno owns STD, but the development is more driven by community
+- It feels wrong to stabilize things without listening to them
+
+---
+
+# Quality Bar
+
+We also set quality bars for a package to be stabilized
+
+- A package need to be documented 100%
+- A package need to be tested reasonably
+
+--
+
+These are mostly thanks to Asher 👍
+
+---
+
+class: middle, center
+
+# The outcome
+
+---
+
+# Timeline of RC process
+
+- 5/7 The first RC - std/bytes@1.0.0-rc.1
+- 6/6 The first 1.0.0 - std/bytes@1.0.0
+- 7/10 The last RC - std/fmt@1.0.0-rc.1
+- 8/5 The last 1.0.0 - std/csv1.0.0
+
+# Stabilization Result
+
+- 30 packages stabilized 🎉
+- 8 packages remain unstable
+
+---
+
+# 30 stable packages
+
+<table align="center">
+<tr>
+<td>bytes&nbsp;&nbsp;&nbsp;</td>
+<td>collections&nbsp;&nbsp;&nbsp;</td>
+<td>media-types&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>crypto&nbsp;&nbsp;&nbsp;</td>
+<td>encoding&nbsp;&nbsp;&nbsp;</td>
+<td>uuid&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>assert&nbsp;&nbsp;&nbsp;</td>
+<td>data-structures&nbsp;&nbsp;&nbsp;</td>
+<td>html&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>msgpack&nbsp;&nbsp;&nbsp;</td>
+<td>path&nbsp;&nbsp;&nbsp;</td>
+<td>regexp&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>toml&nbsp;&nbsp;&nbsp;</td>
+<td>async&nbsp;&nbsp;&nbsp;</td>
+<td>cli&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>text&nbsp;&nbsp;&nbsp;</td>
+<td>ulid&nbsp;&nbsp;&nbsp;</td>
+<td>expect&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>front-matter&nbsp;&nbsp;&nbsp;</td>
+<td>fs&nbsp;&nbsp;&nbsp;</td>
+<td>json&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>jsonc&nbsp;&nbsp;&nbsp;</td>
+<td>streams&nbsp;&nbsp;&nbsp;</td>
+<td>yaml&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>fmt&nbsp;&nbsp;&nbsp;</td>
+<td>http&nbsp;&nbsp;&nbsp;</td>
+<td>net&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td>semver&nbsp;&nbsp;&nbsp;</td>
+<td>testing&nbsp;&nbsp;&nbsp;</td>
+<td>csv&nbsp;&nbsp;&nbsp;</td>
+</tr>
+</table>
+
+# Stable 30 package
+
+- Most major important packages have been stabilized
+- e.g. path, async, assert, fs, streams, testing
+- It's safe to say STD is (mostly) stabilized IMO
+
+---
+# 8 Unstable packages
+
+- archive
+- log
+- webgpu
+- datetime
+- ini
+- io
+- url
+- dotenv
+
+---
+# The quality improvements
+
+- Stable packages are now 100% documented including function parameters, parameter options
+- Test coverage is largely improved
+  - 91% -> 96.5% (less than half uncovered lines)
+
+--
+
+Kudos to Asher
+
+---
+class: middle, center
+
+# Thanks!
+
+
+
