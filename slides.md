@@ -130,9 +130,6 @@ We also set quality bars for a package to be stabilized
 - A package need to be documented 100%
 - A package need to be tested reasonably
 
---
-
-These are mostly thanks to Asher 👍
 
 ---
 
