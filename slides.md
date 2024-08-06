@@ -238,7 +238,7 @@ class: middle, center
 
 - Stable packages are now 100% documented including function parameters, parameter options
 - Test coverage is largely improved
-  - 91% -> 96.5% (less than half uncovered lines)
+  - 91% -> 96.4% (less than half uncovered lines)
 
 --
 
