@@ -2,9 +2,6 @@ dest: docs
 port: 30000
 title: deno std
 description: std
-ogImage: "https://kt3k.github.io/talk_deno_deploy_2023/assets/og-image.png"
-ogImageWidth: 959
-ogImageHeight: 626
 twitter: kt3k
 favicon: ./assets/logo.svg
 remarkConfig:
